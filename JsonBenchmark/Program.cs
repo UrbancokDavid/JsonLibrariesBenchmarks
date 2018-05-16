@@ -11,7 +11,7 @@ namespace JsonBenchmark
 
             BenchmarkRunner.Run<JsonSerializersBechmarks>();
 
-            //Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
