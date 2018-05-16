@@ -10,13 +10,13 @@ namespace JsonBenchmark
         protected string FirstJsonSampleString;
         protected string SecondJsonSampleString;
 
-        protected string FirstChuckNorrisJsonSampleString = Path.Combine(AppContext.BaseDirectory, TestFilesFolder, "chucknorris.json");
-        protected string SecondChuckNorrisJsonSampleString = Path.Combine(AppContext.BaseDirectory, TestFilesFolder, "chucknorris.json");
+        protected string FirstChuckNorrisJsonSamplePath = Path.Combine(AppContext.BaseDirectory, TestFilesFolder, "chucknorris.json");
+        protected string SecondChuckNorrisJsonSamplePath = Path.Combine(AppContext.BaseDirectory, TestFilesFolder, "chucknorris.json");
 
         protected JsonBenchmarkBase()
         {
-            FirstJsonSampleString = File.ReadAllText(FirstChuckNorrisJsonSampleString);
-            SecondJsonSampleString = File.ReadAllText(SecondChuckNorrisJsonSampleString);
+            FirstJsonSampleString = File.ReadAllText(FirstChuckNorrisJsonSamplePath);
+            SecondJsonSampleString = File.ReadAllText(SecondChuckNorrisJsonSamplePath);
         }
     }
 }

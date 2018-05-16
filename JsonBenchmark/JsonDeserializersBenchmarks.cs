@@ -9,7 +9,7 @@ using JsonBenchmark.TestDTOs;
 
 using Newtonsoft.Json;
 
-using Json;
+using Manatee.Json;
 
 namespace JsonBenchmark
 {
@@ -21,7 +21,7 @@ namespace JsonBenchmark
         [Benchmark]
         public Root NewtonsoftJson_Deserialize()
         {
-            return JsonConvert.DeserializeObject<Root>(FirstChuckNorrisJsonSampleString);
+            return JsonConvert.DeserializeObject<Root>(FirstJsonSampleString);
         }
 
 
@@ -30,7 +30,7 @@ namespace JsonBenchmark
         {
             Root root;
 
-            using (var streamReader = new StreamReader(FirstJsonSampleString))
+            using (var streamReader = new StreamReader(FirstChuckNorrisJsonSamplePath))
             using (JsonReader jsonReader = new JsonTextReader(streamReader))
             {
                 var serializer = new JsonSerializer();
@@ -40,13 +40,43 @@ namespace JsonBenchmark
 
             return root;
         }
-    
-    
-        [Benchmark]
-        public Root Json_Deserialize() => JsonParser.Deserialize<Root>(FirstJsonSampleString);
 
 
         [Benchmark]
-        public Root NewtonsoftJson_Deserialize_SecondJson() => JsonConvert.DeserializeObject<Root>(SecondJsonSampleString);
+        public Root NewtonsoftJson_Deserialize_SecondJson()
+        {
+            return JsonConvert.DeserializeObject<Root>(SecondJsonSampleString);
+        } 
+
+
+        [Benchmark]
+        public Root Manatee_Deserialize()
+        {
+            var jsonSerializer = new Manatee.Json.Serialization.JsonSerializer();
+            var jsonValue = JsonValue.Parse(FirstJsonSampleString);
+
+            return jsonSerializer.Deserialize<Root>(jsonValue);
+        }
+
+
+        [Benchmark]
+        public Root ServiceStack_Deserialize()
+        {
+            return ServiceStack.Text.JsonSerializer.DeserializeFromString<Root>(FirstJsonSampleString);
+        }
+
+
+        [Benchmark]
+        public Root ServiceStack_Deserialize_TextReader()
+        {
+            Root result;
+
+            using (var streamReader = new StreamReader(FirstChuckNorrisJsonSamplePath))
+            {
+                result = ServiceStack.Text.JsonSerializer.DeserializeFromReader<Root>(streamReader);
+            }
+
+            return result;
+        }
     }
 }

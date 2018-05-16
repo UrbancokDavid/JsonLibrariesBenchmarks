@@ -19,12 +19,20 @@ namespace JsonBenchmark
             private Root _root;
         
 
-            [GlobalSetup(Target = nameof(NewtonsoftJson_Serialize))]
-            public void SetUp() => _root = JsonConvert.DeserializeObject<Root>(ChuckNorrisJsonSampleString);
+            [GlobalSetup]
+            public void SetUp() => _root = JsonConvert.DeserializeObject<Root>(FirstJsonSampleString);
 
 
             [Benchmark]
             public string NewtonsoftJson_Serialize() => JsonConvert.SerializeObject(_root);
+
+            
+            [Benchmark]
+            public string Manatee_Serialize() => new Manatee.Json.Serialization.JsonSerializer().Serialize(_root).ToString();
+        
+        
+            [Benchmark]
+            public string ServiceStack_Serialize() => ServiceStack.Text.JsonSerializer.SerializeToString(_root);
 
 
             [GlobalCleanup]
