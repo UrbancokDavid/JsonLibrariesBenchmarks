@@ -1,12 +1,17 @@
-﻿using BenchmarkDotNet.Running;
+﻿using System;
+using BenchmarkDotNet.Running;
 
 namespace JsonBenchmark
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             BenchmarkRunner.Run<JsonDeserializersBenchmarks>();
+
+            BenchmarkRunner.Run<JsonSerializersBechmarks>();
+
+            //Console.ReadKey();
         }
     }
 }
